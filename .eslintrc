@@ -1,0 +1,30 @@
+{
+  "extends": [
+    "standard",
+    "plugin:vue/recommended"
+  ],
+  "plugins": [
+    "node",
+    "promise",
+    "standard",
+    "vue"
+  ],
+  "rules": {
+    "constructor-super": "warn",
+    "no-const-assign": "warn",
+    "no-this-before-super": "warn",
+    "no-undef": "warn",
+    "no-unreachable": "warn",
+    "no-unused-vars": "warn",
+    "semi": 0,
+    "valid-typeof": "warn",
+    "vue/attribute-hyphenation": [
+      2,
+      "never"
+    ],
+    "vue/name-property-casing": [
+      "error",
+      "kebab-case"
+    ]
+  }
+}

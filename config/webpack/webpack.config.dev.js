@@ -18,7 +18,7 @@ module.exports = merge(webpackBase, {
           { loader: 'sass-loader' }
         ]
       },
-            {
+      {
         test: /\.(gif|png|PNG|jp(e*)g|svg)$/,
         use: [{
           loader: 'file-loader',

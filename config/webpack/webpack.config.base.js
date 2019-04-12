@@ -42,7 +42,7 @@ module.exports = {
       hash: true,
       template: './html/index.html'
     }),
-    new CleanWebpackPlugin(path.join(__root, 'dist'), {
+    new CleanWebpackPlugin({
       verbose: true,
       root: __root
     })

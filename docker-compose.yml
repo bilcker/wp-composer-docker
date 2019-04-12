@@ -1,0 +1,19 @@
+version: "3"
+services:
+  db:
+    image: mariadb
+    volumes:
+      - /db_data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=simplepw
+    ports:
+      - "3306:3306"
+  wp:
+    image: wordpress
+    volumes:
+      - ./dist:/var/www/html
+    ports:
+      - "8080:80"
+    environment:
+      - WORDPRESS_DB_HOST=db
+      - WORDPRESS_DB_PASSWORD=simplepw

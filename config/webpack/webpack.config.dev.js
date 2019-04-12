@@ -3,7 +3,6 @@ const merge = require('webpack-merge')
 const webpackBase = require('./webpack.config.base.js')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
-
 module.exports = merge(webpackBase, {
   mode: 'development',
   devtool: 'eval-source-map',
@@ -26,7 +25,7 @@ module.exports = merge(webpackBase, {
             name: '[path][name].[ext]'
           }
         }]
-      },
+      }
     ]
   },
   plugins: [

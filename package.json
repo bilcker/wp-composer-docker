@@ -4,6 +4,7 @@
   "description": "Default environment for a docker contianer that initializes a wordpress build.",
   "main": "index.js",
   "scripts": {
+    "dev": "set NODE_ENV=development && webpack --config config/webpack/webpack.config.dev.js",
     "build": "set NODE_ENV=production && webpack --config config/webpack/webpack.config.prod.js",
     "start": "set NODE_ENV=development && webpack-dev-server --progress --colors --inline --open --config config/webpack/webpack.config.dev.js"
   },
@@ -32,7 +33,7 @@
     "@fortawesome/fontawesome-free": "^5.7.2",
     "autoprefixer": "^9.3.1",
     "bootstrap": "^4.3.1",
-    "clean-webpack-plugin": "^1.0.1",
+    "clean-webpack-plugin": "^2.0.1",
     "css-loader": "^2.1.0",
     "eslint": "^5.15.0",
     "eslint-config-standard": "^12.0.0",

@@ -27,15 +27,12 @@ services:
   #   volumes:
   #     - ./dist/wp-content:/var/www/html/wp-content
   phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    depends_on:
-      - database
-    restart: always
+    build:
+        context: ./config/docker/phpmyadmin
     ports:
       - 8181:80
-    environment:
-      PMA_HOST: database
-      MYSQL_USER: bilcker
-      MYSQL_PASSWORD: 200169316*Db
+    restart: always
+    depends_on:
+      - database
 volumes:
     datab: {}

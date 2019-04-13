@@ -1,17 +1,5 @@
 version: "3.3"
 services:
-  database:
-    image: mysql:5.7
-    volumes:
-      - datab:/var/lib/mysql
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: UKoBMndyEY
-      MYSQL_DATABASE: wordpress
-      MYSQL_USER: bilcker
-      MYSQL_PASSWORD: 200169316*Db
-    ports:
-      - "3306:3306"
   wordpress:
     depends_on:
       - database
@@ -26,5 +14,28 @@ services:
       WORDPRESS_DB_HOST: database:3306
       WORDPRESS_DB_USER: bilcker
       WORDPRESS_DB_PASSWORD: 200169316*Db
+  database:
+    image: mysql:5.7
+    volumes:
+      - datab:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: UKoBMndyEY
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: bilcker
+      MYSQL_PASSWORD: 200169316*Db
+    ports:
+      - "3306:3306"
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    depends_on:
+      - database
+    restart: always
+    ports:
+      - 8181:80
+    environment:
+      PMA_HOST: database
+      MYSQL_USER: bilcker
+      MYSQL_PASSWORD: 200169316*Db
 volumes:
     datab: {}

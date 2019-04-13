@@ -1,7 +1,7 @@
 const webpack = require('webpack')
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const CleanWebpackPlugin = require('clean-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 let __root = path.join(__dirname, '../../')
 let __dist = path.join(__dirname, '../../dist')
@@ -11,9 +11,9 @@ module.exports = {
   context: __src,
   entry: path.join(__src, 'js', 'index.js'),
   output: {
-    path: path.resolve(__dist),
-    filename: './js/[name].js',
-    publicPath: ''
+    path: path.resolve(__dist, 'wp-content', 'themes', 'custom-theme', 'js'),
+    filename: '[name].js',
+    publicPath: '/'
   },
   module: {
     rules: [
@@ -27,9 +27,18 @@ module.exports = {
         use: [{
           loader: 'file-loader',
           options: {
-            name: '[path][name].[ext]',
+            name: '[path][name].[ext]'
           }
         }]
+      },
+      {
+        test: /\.(sa|sc|c)ss$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          { loader: 'css-loader' },
+          { loader: 'postcss-loader' },
+          { loader: 'sass-loader' }
+        ]
       }
     ]
   },
@@ -37,14 +46,14 @@ module.exports = {
     new webpack.EnvironmentPlugin([
       'NODE_ENV'
     ]),
-    new HtmlWebpackPlugin({
-      inject: false,
-      hash: true,
-      template: './html/index.html'
-    }),
-    new CleanWebpackPlugin({
-      verbose: true,
-      root: __root
+    new MiniCssExtractPlugin({
+      filename: '../style.css',
+      chunkFilename: '../css/[id].[hash].css'
     })
+    // new HtmlWebpackPlugin({
+    //   inject: false,
+    //   hash: true,
+    //   template: './html/index.html'
+    // }),
   ]
 }

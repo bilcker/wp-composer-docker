@@ -15,18 +15,20 @@ services:
       WORDPRESS_DB_USER: bilcker
       WORDPRESS_DB_PASSWORD: 200169316*Db
   database:
-    image: mysql:5.7
+    build:
+      context: ./config/docker/database
     volumes:
-      - ./config/database:/docker-entrypoint-initdb.d
       - datab:/var/lib/mysql
     restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: UKoBMndyEY
-      MYSQL_DATABASE: wordpress
-      MYSQL_USER: bilcker
-      MYSQL_PASSWORD: 200169316*Db
-    ports:
-      - "3306:3306"
+  # composer:
+  #   build:
+  #     #Run this docker file
+  #     context: ./config/docker/composer
+  #   # image: composer/composer:php7
+  #   restart: always
+  #   # command: install
+  #   volumes:
+  #     - ./dist/wp-content:/var/www/html/wp-content
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     depends_on:

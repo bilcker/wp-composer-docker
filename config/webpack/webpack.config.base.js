@@ -58,7 +58,7 @@ module.exports = {
     }),
     new CopyWebpackPlugin([
       { from: path.join(__src, 'functions', 'functions.php'), to: path.join(__theme) }
-    ])
+    ]),
     new CopyWebpackPlugin([
       { from: path.join(__src, 'pages'), to: path.join(__theme) }
     ])

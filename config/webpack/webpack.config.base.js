@@ -2,10 +2,16 @@ const webpack = require('webpack')
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
+// Define this as your theme and all will be copied to it
+let wpTheme = 'custom-theme'
+// Setup Vars
 let __root = path.join(__dirname, '../../')
 let __dist = path.join(__dirname, '../../dist')
 let __src = path.join(__dirname, '../../src')
+let __wpContent = path.join(__dist, 'wp-content', 'themes')
+let __theme = path.join(__wpContent, wpTheme)
 
 module.exports = {
   context: __src,
@@ -49,7 +55,10 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: '../style.css',
       chunkFilename: '../css/[id].[hash].css'
-    })
+    }),
+    new CopyWebpackPlugin([
+      { from: path.join(__src, 'functions', 'functions.php'), to: path.join(__theme) }
+    ])
     // new HtmlWebpackPlugin({
     //   inject: false,
     //   hash: true,

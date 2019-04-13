@@ -1,19 +1,16 @@
 version: "3.3"
 services:
   wordpress:
-    depends_on:
-      - database
-    image: wordpress:5.1.1-php7.3-apache
+    build:
+      context: ./config/docker/wordpress
+    volumes:
+      - ./dist/wp-content:/var/www/html/wp-content
     ports:
       - "8080:80"
     restart: always
     working_dir: /var/www/html
-    volumes:
-      - ./dist/wp-content:/var/www/html/wp-content
-    environment:
-      WORDPRESS_DB_HOST: database:3306
-      WORDPRESS_DB_USER: bilcker
-      WORDPRESS_DB_PASSWORD: 200169316*Db
+    depends_on:
+      - database
   database:
     build:
       context: ./config/docker/database

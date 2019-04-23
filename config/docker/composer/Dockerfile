@@ -1,11 +1,13 @@
-# start with the official Composer Image and name it
-FROM composer:1.5.1 AS composer
+FROM composer/composer:php7
 
-# Continue with the official PHP image
-FROM php:7.1.8
+# Install composer
+WORKDIR /var/www/html/wp-content
+COPY ./includes/composer.json /var/www/html/wp-content
 
-# Copy the Composer PHAR from the COmposer image into the PHP image
-COPY --from=composer /usr/bin/composer /usr/bin/composer
+RUN curl -sS https://getcomposer.org/installer | \
+    php -- --install-dir=/usr/bin/ --filename=composer
+# COPY composer.lock ./
+RUN composer install --no-scripts --no-autoloader
+COPY ./ /var/www/
 
-# Show that both Composer and PHP run as expected
-RUN composer --version && php -v
+RUN composer dump-autoload --optimize

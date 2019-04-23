@@ -17,15 +17,14 @@ services:
     volumes:
       - datab:/var/lib/mysql
     restart: always
-  # composer:
-  #   build:
-  #     #Run this docker file
-  #     context: ./config/docker/composer
-  #   # image: composer/composer:php7
-  #   restart: always
-  #   # command: install
-  #   volumes:
-  #     - ./dist/wp-content:/var/www/html/wp-content
+  composer:
+    build:
+      context: ./config/docker/composer
+    restart: 'no'
+    image: "composer"
+    command: "install"
+    volumes:
+      - ./dist/wp-content:/var/www/html/wp-content
   phpmyadmin:
     build:
         context: ./config/docker/phpmyadmin

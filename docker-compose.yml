@@ -1,10 +1,21 @@
 version: "3.3"
 services:
+  # composer:
+  #   # container_name: composer-build
+  #   # build:
+  #   #   context: ./config/docker/composer
+  #   restart: 'no'
+  #   image: "composer:latest"
+  #   volumes:
+  #     - .:/app
+  #   command: 'true'
+  #   # volumes:
+    #   - ./dist/wp-content:/var/www/html/wp-content
   wordpress:
     build:
       context: ./config/docker/wordpress
     volumes:
-      - ./dist/wp-content:/var/www/html/wp-content
+      - ./app/wp-content:/var/www/html/wp-content
     ports:
       - "8080:80"
     restart: always
@@ -17,21 +28,51 @@ services:
     volumes:
       - datab:/var/lib/mysql
     restart: always
-  composer:
-    build:
-      context: ./config/docker/composer
-    restart: 'no'
-    image: "composer"
-    command: "install"
-    volumes:
-      - ./dist/wp-content:/var/www/html/wp-content
   phpmyadmin:
     build:
         context: ./config/docker/phpmyadmin
     ports:
-      - 8181:80
+      - 8282:80
     restart: always
     depends_on:
       - database
 volumes:
     datab: {}
+
+#     version: "3.3"
+# services:
+  # wordpress:
+  #   build:
+  #     context: ./config/docker/wordpress
+  #   volumes:
+  #     - ./dist/wp-content:/var/www/html/wp-content
+  #   ports:
+  #     - "8080:80"
+  #   restart: always
+  #   working_dir: /var/www/html
+  #   depends_on:
+  #     - database
+  # database:
+  #   build:
+  #     context: ./config/docker/database
+  #   volumes:
+  #     - datab:/var/lib/mysql
+  #   restart: always
+  # compose:
+  #   container_name: composer-build
+  #   build:
+  #     context: ./config/docker/composer
+  #   restart: 'no'
+  #   image: "composer"
+  #   volumes:
+  #     - ./dist/wp-content:/var/www/html/wp-content
+  # phpmyadmin:
+  #   build:
+  #       context: ./config/docker/phpmyadmin
+  #   ports:
+  #     - 8282:80
+  #   restart: always
+  #   depends_on:
+#   #     - database
+# volumes:
+#     datab: {}

@@ -1,0 +1,25 @@
+{
+  "name": "wp-docker/timbuild",
+  "description": "wordpress composer config file",
+  "authors": [{
+    "name": "Timtohy J. Bilcke"
+  }],
+  "type": "project",
+  "repositories":[
+    {
+      "type":"composer",
+      "url":"https://wpackagist.org"
+    }
+  ],
+  "require": {
+    "composer/installers": "~1.0",
+    "wpackagist-plugin/wordpress-seo": "11.0"
+  },
+  "extra": {
+    "installer-paths": {
+        "wp-content/plugins/{$name}": ["type:wordpress-plugin"],
+        "wp-content/themes/{$name}": ["type:wordpress-theme"],
+        "wp-content/mu-plugins/{$name}": ["type:wordpress-muplugin"]
+    }
+  }
+}

@@ -75,3 +75,7 @@ typings/
 
 # FuseBox cache
 .fusebox/
+
+# distribution files
+dist/
+app/

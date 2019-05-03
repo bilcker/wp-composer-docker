@@ -4,9 +4,9 @@
   "description": "Default environment for a docker contianer that initializes a wordpress build.",
   "main": "index.js",
   "scripts": {
-    "dev": "rm -rf dist && set NODE_ENV=development && webpack --config config/webpack/webpack.config.dev.js --mode development",
-    "build": "rm -rf dist && set NODE_ENV=production && webpack --config config/webpack/webpack.config.prod.js --mode production",
-    "start": "concurrently \"set NODE_ENV=development && webpack-dev-server --mode development --config config/webpack/webpack.config.dev.js --progress --colors --inline --open\" \"docker-compose up\""
+    "build:dev": "rm -rf dist && set NODE_ENV=development && webpack --config config/webpack/webpack.config.dev.js --mode development",
+    "build:prod": "rm -rf dist && set NODE_ENV=production && webpack --config config/webpack/webpack.config.prod.js --mode production",
+    "start": "concurrently \"set NODE_ENV=development && webpack --config config/webpack/webpack.config.dev.js --mode development --progress --colors --inline --open\" \"docker-compose up\""
   },
   "repository": {
     "type": "git",

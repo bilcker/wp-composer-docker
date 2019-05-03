@@ -1,44 +1,26 @@
-FROM composer/composer:php7
-COPY composer.json /app
+# Name the build to ensure the Copy won't break even if code reordered
+FROM composer/composer:php7 as build
 
-RUN composer install --ignore-platform-reqs --no-scripts
+WORKDIR /var/www/html
+# Run composer installer
+RUN curl -sS https://getcomposer.org/installer | \
+    php -- --install-dir=/usr/bin/ --filename=composer
+# Copy composer config file
+COPY composer.json /var/www/html
+# COPY all files
+COPY dist/ /var/www/html/
+# Install Composer
+RUN composer install --no-scripts --no-autoloader
+RUN composer dump-autoload --optimize
+# Run the wordpress and php image
+FROM wordpress:5.1.1-php7.3-apache
 
-WORKDIR /app
+# Set our environment variables for logging into wordpress
+ENV WORDPRESS_DB_HOST database:3306
+ENV WORDPRESS_DB_USER bilcker
+ENV WORDPRESS_DB_PASSWORD 200169316*Db
 
-RUN composer install --prefer-source --no-interaction
+COPY --from=build /var/www/html/ /var/www/html/
 
-ENV PATH="~/.composer/vendor/bin:./vendor/bin:${PATH}"
-
-# COPY ./ /app
-# # COPY composer.json /var/www/html/wp-content
-# # COPY composer.json C:/Users\tbilc\OneDrive\Documents\Repos\wp-docker\dist
-# RUN composer install --ignore-platform-reqs --no-scripts
-
-# WORKDIR /app/
-# # FROM php:fpm
-# # WORKDIR /var/www/html/
-
-# # RUN apt-get update && apt-get install -y \
-# #         libfreetype6-dev \
-# #         libjpeg62-turbo-dev \
-# #         libmcrypt-dev \
-# #         libpng12-dev \
-# #         zip \
-# #         unzip \
-# #     && docker-php-ext-install -j$(nproc) iconv mcrypt \
-# #     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
-# #     && docker-php-ext-install -j$(nproc) gd \
-# #     && docker-php-ext-install mysqli \
-# #     && docker-php-ext-enable opcache
-# # Install composer
-# # WORKDIR /var/www/html/wp-content
-# # RUN curl -sS https://getcomposer.org/installer | \
-# #     php -- --install-dir=/usr/bin/ --filename=composer
-    
-# # # COPY composer.lock ./
-# # RUN composer install --no-scripts --no-autoloader
-# # # COPY ./ /var/www/
-# # RUN composer dump-autoload --optimize
-
-# COPY ./ /var/www/html/
-# COPY --from=composer ./app/ /var/www/html/
+# Expose a port to run on
+EXPOSE 8080:80

@@ -1,4 +1,4 @@
-# wp-docker
+# wp-composer-docker
 
 A basic environment setup from Docker. Wp-docker uses composer to install wordpress dependencies in the wordpress build. The composer file can be easily adapted for any local wordpress developement project.
 

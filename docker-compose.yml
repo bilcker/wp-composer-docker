@@ -1,27 +1,28 @@
 version: "3.3"
 services:
-  # composer:
-  #   # container_name: composer-build
-  #   # build:
-  #   #   context: ./config/docker/composer
-  #   restart: 'no'
-  #   image: "composer:latest"
-  #   volumes:
-  #     - .:/app
-  #   command: 'true'
-  #   # volumes:
-    #   - ./dist/wp-content:/var/www/html/wp-content
-  wordpress:
+  composer:
+    container_name: wp-compose
     build:
-      context: ./config/docker/wordpress
-    volumes:
-      - ./app/wp-content:/var/www/html/wp-content
+      context: ./
+    restart: 'no'
     ports:
       - "8080:80"
-    restart: always
-    working_dir: /var/www/html
-    depends_on:
-      - database
+    # image: "composer:latest"
+    # volumes:
+    #   - .:/app
+    # command: 'true'
+    # volumes:
+      # - ./dist/wp-content:/var/www/html/wp-content
+  # wordpress:
+    # build:
+    #   context: ./config/docker/wordpress
+    # volumes:
+      # - ./app/wp-content:/var/www/html/wp-content
+    
+    # restart: always
+    # working_dir: /var/www/html
+    # depends_on:
+    #   - database
   database:
     build:
       context: ./config/docker/database

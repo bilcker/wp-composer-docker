@@ -8,7 +8,7 @@ RUN curl -sS https://getcomposer.org/installer | \
 # Copy composer config file
 COPY composer.json /var/www/html
 # COPY all files
-COPY app/ /var/www/html/
+COPY dist/ /var/www/html/
 # Install Composer
 RUN composer install --no-scripts --no-autoloader
 RUN composer dump-autoload --optimize

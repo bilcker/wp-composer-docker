@@ -8,7 +8,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 let wpTheme = 'custom-theme'
 // Setup Vars
 let __root = path.join(__dirname, '../../')
-let __dist = path.join(__dirname, '../../app')
+let __dist = path.join(__dirname, '../../dist')
 let __src = path.join(__dirname, '../../src')
 let __wpContent = path.join(__dist, 'wp-content', 'themes')
 let __theme = path.join(__wpContent, wpTheme)

@@ -2,19 +2,17 @@
 FROM composer/composer:php7 as build
 
 WORKDIR /var/www/html
-
+# Run composer installer
 RUN curl -sS https://getcomposer.org/installer | \
     php -- --install-dir=/usr/bin/ --filename=composer
-
 # Copy composer config file
 COPY composer.json /var/www/html
-# COPY FILES
+# COPY all files
 COPY app/ /var/www/html/
-# COPY composer.lock ./
+# Install Composer
 RUN composer install --no-scripts --no-autoloader
-# COPY ./ /var/www/
 RUN composer dump-autoload --optimize
-
+# Run the wordpress and php image
 FROM wordpress:5.1.1-php7.3-apache
 
 # Set our environment variables for logging into wordpress

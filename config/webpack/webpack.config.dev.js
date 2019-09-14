@@ -14,7 +14,9 @@ module.exports = merge(webpackBase, {
       port: 4200,
       open: true,
       files: [
-        './dist/*.php'
+        './dist/*.php',
+        '.dist/**/*.css',
+        '.dist/**/*.js'
       ]
     })
   ]

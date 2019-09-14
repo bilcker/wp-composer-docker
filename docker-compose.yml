@@ -2,25 +2,29 @@ version: "3.3"
 services:
   composer:
     # Runs dockerfile for composer and wordpress
-    container_name: wp-compose
+    container_name: wp-composer
     build:
       context: ./
+    # volumes:
+    #   - ./dist/:/var/www/html/
     restart: 'no'
     ports:
       - "8080:80"
-  database:
-    build:
-      context: ./config/docker/database
-    volumes:
-      - datab:/var/lib/mysql
-    restart: always
-  phpmyadmin:
-    build:
-        context: ./config/docker/phpmyadmin
-    ports:
-      - 8282:80
-    restart: always
-    depends_on:
-      - database
-volumes:
-    datab: {}
+    logging:
+      driver: none
+  # database:
+  #   build:
+  #     context: ./config/docker/database
+  #   volumes:
+  #     - datab:/var/lib/mysql
+  #   restart: always
+  # phpmyadmin:
+  #   build:
+  #       context: ./config/docker/phpmyadmin
+  #   ports:
+  #     - 8282:80
+  #   restart: always
+  #   depends_on:
+  #     - database
+# volumes:
+#     datab: {}

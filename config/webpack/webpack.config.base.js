@@ -38,6 +38,15 @@ module.exports = {
         }]
       },
       {
+        test: /\.(gif|png|PNG|jp(e*)g|svg)$/,
+        use: [{
+          loader: 'file-loader',
+          options: {
+            name: '[path][name].[ext]'
+          }
+        }]
+      },
+      {
         test: /\.(sa|sc|c)ss$/,
         use: [
           MiniCssExtractPlugin.loader,
@@ -60,6 +69,9 @@ module.exports = {
       { from: path.join(__src, 'functions', 'functions.php'), to: path.join(__theme) }
     ]),
     new CopyWebpackPlugin([
+      { from: path.join(__src, 'config', 'wp-config.php'), to: path.join(__dist) }
+    ]),
+    new CopyWebpackPlugin([
       { from: path.join(__src, 'pages'), to: path.join(__theme) }
     ])
     // new HtmlWebpackPlugin({
@@ -67,5 +79,20 @@ module.exports = {
     //   hash: true,
     //   template: './html/index.html'
     // }),
-  ]
+  ],stats: {
+    colors: true,
+    hash: false,
+    version: false,
+    timings: false,
+    assets: false,
+    chunks: false,
+    modules: false,
+    reasons: false,
+    children: false,
+    source: false,
+    errors: true,
+    errorDetails: false,
+    warnings: true,
+    publicPath: false
+  }
 }

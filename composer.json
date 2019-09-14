@@ -1,24 +1,56 @@
 {
-  "name": "wp-docker/timbuild",
-  "description": "wordpress composer config file",
-  "authors": [{
-    "name": "Timtohy J. Bilcke"
-  }],
+  "name": "tjbilcke/wp-composer-site",
+  "description": "Template for creating local wordpress site",
   "type": "project",
-  "repositories":[
+  "authors": [
     {
-      "type":"composer",
-      "url":"https://wpackagist.org"
+      "name": "Timorhy J. Bilcke",
+      "email": "tbilckecreative@gmail.com"
+    }
+  ],
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://wpackagist.org"
     }
   ],
   "require": {
-    "composer/installers": "~1.0",
-    "wpackagist-plugin/wordpress-seo": "11.0",
+    "johnpbloch/wordpress": "*",
+    "wpackagist-plugin/wordpress-seo":"*"
   },
   "extra": {
+    "wordpress-install-dir": "dist",
     "installer-paths": {
-        "wp-content/plugins/{$name}": ["type:wordpress-plugin"],
-        "wp-content/themes/{$name}": ["type:wordpress-theme"]
+      "dist/wp-content/plugins/{$name}/": [
+        "type:wordpress-plugin"
+      ],
+      "dist/wp-content/themes/{$name}/": [
+        "type:wordpress-theme"
+      ]
     }
+  },
+  "require-dev": {
+    "wpackagist-plugin/debug-bar": "0.8.2",
+    "wpackagist-plugin/debug-bar-console": "0.3"
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "if [ ! -f wp-load.php ]; then rm wordpress/composer.*; fi",
+      "if [ ! -f wp-load.php ]; then rm -rf wordpress/wp-content/; fi",
+      "if [ ! -f wp-load.php ]; then rm -rf wp-admin/; fi",
+      "if [ ! -f wp-load.php ]; then rm -rf wp-includes/; fi",
+      "if [ ! -f wp-load.php ]; then mv wp-content/ wordpress/; fi",
+      "if [ -d wordpress ] && [ ! -f wp-load.php ]; then mv wordpress/* .; fi",
+      "if [ -d wordpress ]; then rm -rf wordpress/; fi"
+    ],
+    "post-update-cmd": [
+      "rm wordpress/composer.*",
+      "rm -rf wordpress/wp-content/",
+      "rm -rf wp-admin/",
+      "rm -rf wp-includes/",
+      "mv wp-content/ wordpress/",
+      "mv wordpress/* .",
+      "rm -rf wordpress/"
+    ]
   }
 }

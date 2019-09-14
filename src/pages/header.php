@@ -13,7 +13,11 @@
     <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
  
     <!--=== TITLE ===-->  
-    <title><?php wp_title(); ?> - <?php bloginfo( 'name' ); ?></title>
+    <title>
+      <?php wp_title('&raquo;','true','right'); ?>
+      <?php if ( is_front_page() ) { bloginfo('name'); } ?>
+      <?php if ( is_single() ) { bloginfo('name'); } ?> &raquo; <?php bloginfo('description'); ?>
+    </title>
      
     <!--=== WP_HEAD() ===-->
     <?php wp_head(); ?>
@@ -23,5 +27,5 @@
 <body <?php body_class(); ?>>
 
   <header>
-    <h1>I am the test Header</h1>
+    <h1>This is the staging template</h1>
   </header>

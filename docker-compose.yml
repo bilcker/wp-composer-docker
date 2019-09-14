@@ -5,8 +5,8 @@ services:
     container_name: wp-composer
     build:
       context: ./
-    # volumes:
-    #   - ./dist/:/var/www/html/
+    volumes:
+      - ./dist/wp-content/themes/custom-theme:/var/www/html/dist/wp-content/themes/custom-theme
     restart: 'no'
     ports:
       - "8080:80"

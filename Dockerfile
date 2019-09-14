@@ -45,10 +45,13 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 RUN composer install --prefer-dist --no-scripts --no-dev --no-autoloader
 
 # Copy codebase
-# COPY . ./cd dist
+# COPY ./dist/wp-content/themedockers/custom-theme /wp-content/themes/
 
 # Finish composer
 RUN composer dump-autoload --no-scripts --no-dev --optimize
+
+
+
 
 # Copy existing application directory contents
 # COPY ./dist/ /var/www/html

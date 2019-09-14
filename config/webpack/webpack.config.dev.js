@@ -1,22 +1,23 @@
-const webpack = require('webpack')
+
 const merge = require('webpack-merge')
 const webpackBase = require('./webpack.config.base.js')
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 
 module.exports = merge(webpackBase, {
   mode: 'development',
-  devtool: 'eval-source-map',
-  module: {
-    rules: [
-      {
-        test: /\.(gif|png|PNG|jp(e*)g|svg)$/,
-        use: [{
-          loader: 'file-loader',
-          options: {
-            name: '[path][name].[ext]'
-          }
-        }]
-      }
-    ]
-  },
-  plugins: []
+  devtool: 'inline-source-map',
+  watch: true,
+  plugins: [
+    new BrowserSyncPlugin({
+      host: 'localhost',
+      proxy: 'http://localhost:8080/dist/',
+      port: 4200,
+      open: true,
+      files: [
+        './dist/*.php',
+        '.dist/**/*.css',
+        '.dist/**/*.js'
+      ]
+    })
+  ]
 })

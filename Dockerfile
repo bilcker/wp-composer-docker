@@ -1,26 +1,47 @@
-# Name the build to ensure the Copy won't break even if code reordered
-FROM composer/composer:php7 as build
+#########################
+### PHP:APACHE SERVER ###
+#########################
+FROM php:7.0-apache
 
+# Install PHP and Mysqli
+RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli
+
+# Copy composer.lock and composer.json
+COPY composer.json /var/www/html/
+
+# Change working dir
 WORKDIR /var/www/html
-# Run composer installer
-RUN curl -sS https://getcomposer.org/installer | \
-    php -- --install-dir=/usr/bin/ --filename=composer
-# Copy composer config file
-COPY composer.json /var/www/html
-# COPY all files
-COPY dist/ /var/www/html/
-# Install Composer
-RUN composer install --no-scripts --no-autoloader
-RUN composer dump-autoload --optimize
-# Run the wordpress and php image
-FROM wordpress:5.1.1-php7.3-apache
 
-# Set our environment variables for logging into wordpress
-ENV WORDPRESS_DB_HOST database:3306
-ENV WORDPRESS_DB_USER bilcker
-ENV WORDPRESS_DB_PASSWORD 200169316*Db
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    mysql-client \
+    libpng-dev \
+    libjpeg62-turbo-dev \
+    libfreetype6-dev \
+    locales \
+    zip \
+    jpegoptim optipng pngquant gifsicle \
+    vim \
+    unzip \
+    git \
+    curl
 
-COPY --from=build /var/www/html/ /var/www/html/
+# Clear cache
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends git zip
 
-# Expose a port to run on
-EXPOSE 8080:80
+# Download composer and unzip it in the proper directory
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Install dependencies
+RUN composer install --prefer-dist --no-scripts --no-dev --no-autoloader
+
+# Run Composer
+RUN composer dump-autoload --no-scripts --no-dev --optimize
+
+# Copy wordpress configuration file 
+COPY ./dist/wp-config.php /var/www/html/dist/
+
+# Expose port 9000 and start php-fpm server
+EXPOSE 9000
